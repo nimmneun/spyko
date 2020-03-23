@@ -1,0 +1,24 @@
+{
+  "name": "nimmneun/spyko",
+  "description": "Spryker Akeneo Connector ... pre pre-alpha ^^",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Stefan",
+      "email": "nimmneun@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Spyko\\": "src/Spyko"
+    }
+  },
+  "require": {
+    "php": ">=7.1",
+    "akeneo/api-php-client": "^4.0",
+    "php-http/guzzle6-adapter": "2.0",
+    "http-interop/http-factory-guzzle": "1.0",
+    "ext-json": "*"
+  }
+}
