@@ -23,11 +23,11 @@ class SimpleSelectValueResolver implements ValueResolverInterface
         $this->attributeOptionApi = $attributeOptionApi;
     }
 
-    public function get(array $attribute, string $attributeCode, $value): array
+    public function resolve(array $attribute, array $value)
     {
         $allLabels = [];
         foreach ($value as $item) {
-            $option = $this->getValueCodeOption($attributeCode, $item[Key::DATA]);
+            $option = $this->getValueCodeOption($attribute[Key::CODE], $item[Key::DATA]);
             $attributeValueCode = $item[Key::DATA];
             if ($item[Key::LOCALE]) {
                 $attributeValue = $option[Key::LABELS][$item[Key::LOCALE]];

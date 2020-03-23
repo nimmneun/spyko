@@ -23,12 +23,12 @@ class MultiSelectValueResolver implements ValueResolverInterface
         $this->attributeOptionApi = $attributeOptionApi;
     }
 
-    public function get(array $attribute, string $attributeCode, $value): array
+    public function resolve(array $attribute, array $value)
     {
         $allLabels = [];
         foreach ($value as $item) {
             foreach ($item[Key::DATA] as $valueCode) {
-                $option = $this->getValueCodeOption($attributeCode, $valueCode);
+                $option = $this->getValueCodeOption($attribute[Key::CODE], $valueCode);
                 foreach ($option[Key::LABELS] as $locale => $label) {
                     if (isset($allLabels[$locale])) {
                         $allLabels[$locale] = new AttributeValue($allLabels[$locale] . ",$label");

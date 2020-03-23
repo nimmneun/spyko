@@ -6,9 +6,8 @@ interface ValueResolverInterface
 {
     /**
      * @param array $attribute
-     * @param string $attributeCode
-     * @param mixed $value
+     * @param array $value
      * @return mixed
      */
-    public function get(array $attribute, string $attributeCode, $value);
+    public function resolve(array $attribute, array $value);
 }

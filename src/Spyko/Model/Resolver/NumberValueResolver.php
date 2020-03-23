@@ -7,7 +7,7 @@ use Spyko\Model\ArrayKey as Key;
 
 class NumberValueResolver implements ValueResolverInterface
 {
-    public function get(array $attribute, string $attributeCode, $value)
+    public function resolve(array $attribute, array $value)
     {
         $values = [];
         foreach ($value as $item) {

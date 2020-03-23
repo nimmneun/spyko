@@ -80,7 +80,7 @@ class Resolver
             !$attribute[Key::LOCALIZABLE] || printf("%-40s %-30s\n", $attribute[Key::CODE], $attribute[Key::TYPE]);
 
             $valueResolver = $this->getResolver($attribute[Key::TYPE]);
-            $attributes[$code] = $valueResolver->get($attribute, $code, $value);
+            $attributes[$code] = $valueResolver->resolve($attribute, $value);
         }
 
         ksort($attributes);

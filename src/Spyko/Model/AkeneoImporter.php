@@ -22,7 +22,7 @@ class AkeneoImporter
     /**
      * @var array
      */
-    private $importers;
+    private $cache;
 
     public function __construct(AkeneoPimClientInterface $client)
     {
@@ -31,8 +31,8 @@ class AkeneoImporter
 
     public function getProductImporter(): AkeneoProductImporter
     {
-        return $this->importers[AkeneoProductImporter::class]
-            ?? $this->importers[AkeneoProductImporter::class] = new AkeneoProductImporter(
+        return $this->cache[AkeneoProductImporter::class]
+            ?? $this->cache[AkeneoProductImporter::class] = new AkeneoProductImporter(
                 $this->client,
                 $this->getAttributeResolver()
             );
@@ -40,8 +40,8 @@ class AkeneoImporter
 
     public function getModelImporter(): AkeneoModelImporter
     {
-        return $this->importers[AkeneoModelImporter::class]
-            ?? $this->importers[AkeneoModelImporter::class] = new AkeneoModelImporter(
+        return $this->cache[AkeneoModelImporter::class]
+            ?? $this->cache[AkeneoModelImporter::class] = new AkeneoModelImporter(
                 $this->client,
                 $this->getAttributeResolver()
             );
@@ -49,8 +49,8 @@ class AkeneoImporter
 
     public function getAttributeResolver(): Resolver
     {
-        return $this->importers[Resolver::class]
-            ?? $this->importers[Resolver::class] = new Resolver(
+        return $this->cache[Resolver::class]
+            ?? $this->cache[Resolver::class] = new Resolver(
                 $this->client->getAttributeApi(),
                 new TextValueResolver(),
                 new BoolValueResolver(),

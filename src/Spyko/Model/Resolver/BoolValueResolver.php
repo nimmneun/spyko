@@ -7,7 +7,7 @@ use Spyko\Model\ArrayKey as Key;
 
 class BoolValueResolver implements ValueResolverInterface
 {
-    public function get(array $attribute, string $attributeCode, $value)
+    public function resolve(array $attribute, array $value)
     {
         return new AttributeValue($value[0][Key::DATA] ? 'true' : 'false');
     }
