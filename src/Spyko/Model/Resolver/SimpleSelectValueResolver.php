@@ -3,7 +3,7 @@
 namespace Spyko\Model\Resolver;
 
 use Akeneo\Pim\ApiClient\Api\AttributeOptionApiInterface;
-use Spyko\Model\Attribute;
+use Spyko\Model\AttributeValue;
 use Spyko\Model\ArrayKey as Key;
 
 class SimpleSelectValueResolver implements ValueResolverInterface
@@ -28,11 +28,13 @@ class SimpleSelectValueResolver implements ValueResolverInterface
         $allLabels = [];
         foreach ($value as $item) {
             $option = $this->getValueCodeOption($attributeCode, $item[Key::DATA]);
+            $attributeValueCode = $item[Key::DATA];
             if ($item[Key::LOCALE]) {
-                $allLabels[$item[Key::LOCALE]] = new Attribute($option[Key::LABELS][$item[Key::LOCALE]]);
+                $attributeValue = $option[Key::LABELS][$item[Key::LOCALE]];
+                $allLabels[$item[Key::LOCALE]] = new AttributeValue($attributeValue, $attributeValueCode);
             } else {
                 foreach ($option[Key::LABELS] as $locale => $label) {
-                    $allLabels[$locale] = new Attribute($label);
+                    $allLabels[$locale] = new AttributeValue($label, $attributeValueCode);
                 }
             }
         }

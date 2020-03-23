@@ -2,7 +2,7 @@
 
 namespace Spyko\Model\Resolver;
 
-use Spyko\Model\Attribute;
+use Spyko\Model\AttributeValue;
 use Spyko\Model\ArrayKey as Key;
 
 class NumberValueResolver implements ValueResolverInterface
@@ -13,9 +13,9 @@ class NumberValueResolver implements ValueResolverInterface
         foreach ($value as $item) {
             $realValue = (string)(float)$item[Key::DATA];
             if (isset($item[Key::LOCALE])) {
-                $values[$item[Key::LOCALE]] = new Attribute($realValue);
+                $values[$item[Key::LOCALE]] = new AttributeValue($realValue);
             } else {
-                $values = new Attribute($realValue);
+                $values = new AttributeValue($realValue);
             }
         }
 

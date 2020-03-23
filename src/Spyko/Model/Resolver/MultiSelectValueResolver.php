@@ -3,7 +3,7 @@
 namespace Spyko\Model\Resolver;
 
 use Akeneo\Pim\ApiClient\Api\AttributeOptionApiInterface;
-use Spyko\Model\Attribute;
+use Spyko\Model\AttributeValue;
 use Spyko\Model\ArrayKey as Key;
 
 class MultiSelectValueResolver implements ValueResolverInterface
@@ -31,9 +31,9 @@ class MultiSelectValueResolver implements ValueResolverInterface
                 $option = $this->getValueCodeOption($attributeCode, $valueCode);
                 foreach ($option[Key::LABELS] as $locale => $label) {
                     if (isset($allLabels[$locale])) {
-                        $allLabels[$locale] = new Attribute($allLabels[$locale] . ",$label");
+                        $allLabels[$locale] = new AttributeValue($allLabels[$locale] . ",$label");
                     } else {
-                        $allLabels[$locale] = new Attribute($label);
+                        $allLabels[$locale] = new AttributeValue($label);
                     }
                 }
             }

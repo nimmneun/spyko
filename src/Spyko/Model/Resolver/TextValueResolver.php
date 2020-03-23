@@ -2,7 +2,7 @@
 
 namespace Spyko\Model\Resolver;
 
-use Spyko\Model\Attribute;
+use Spyko\Model\AttributeValue;
 use Spyko\Model\ArrayKey as Key;
 
 class TextValueResolver implements ValueResolverInterface
@@ -12,9 +12,9 @@ class TextValueResolver implements ValueResolverInterface
         $allValues = [];
         foreach ($value as $item) {
             if (isset($item[Key::LOCALE])) {
-                $allValues[$item[Key::LOCALE]] = new Attribute($item[Key::DATA]);
+                $allValues[$item[Key::LOCALE]] = new AttributeValue($item[Key::DATA]);
             } else {
-                return new Attribute($item[Key::DATA]);
+                return new AttributeValue($item[Key::DATA]);
             }
 
         }
