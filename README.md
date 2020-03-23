@@ -1,0 +1,2 @@
+# spyko
+Spryker Akeneo Connector
