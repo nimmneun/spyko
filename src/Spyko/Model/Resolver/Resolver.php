@@ -76,16 +76,13 @@ class Resolver
     {
         foreach ($attributes as $code => $value) {
             $attribute = $this->getAttribute($code);
-
-            !$attribute[Key::LOCALIZABLE] || printf("%-40s %-30s\n", $attribute[Key::CODE], $attribute[Key::TYPE]);
-
             $valueResolver = $this->getResolver($attribute[Key::TYPE]);
             $attributes[$code] = $valueResolver->resolve($attribute, $value);
         }
 
         ksort($attributes);
 
-        file_put_contents('output/attributes-' . date('Ymd-His') . '.json', json_encode($attributes, JSON_PRETTY_PRINT));
+//        file_put_contents('output/attributes-' . date('Ymd-His') . '.json', json_encode($attributes, JSON_PRETTY_PRINT));
 
         return $attributes;
     }

@@ -9,16 +9,16 @@ class NumberValueResolver implements ValueResolverInterface
 {
     public function resolve(array $attribute, array $value)
     {
-        $values = [];
+        $results = [];
         foreach ($value as $item) {
             $realValue = (string)(float)$item[Key::DATA];
             if (isset($item[Key::LOCALE])) {
-                $values[$item[Key::LOCALE]] = new AttributeValue($realValue);
+                $results[$item[Key::LOCALE]] = new AttributeValue($realValue);
             } else {
-                $values = new AttributeValue($realValue);
+                $results = new AttributeValue($realValue);
             }
         }
 
-        return $values;
+        return $results;
     }
 }

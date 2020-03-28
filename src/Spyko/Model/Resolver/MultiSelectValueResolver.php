@@ -25,28 +25,29 @@ class MultiSelectValueResolver implements ValueResolverInterface
 
     public function resolve(array $attribute, array $value)
     {
-        $allLabels = [];
+        $results = [];
         foreach ($value as $item) {
             foreach ($item[Key::DATA] as $valueCode) {
-                $option = $this->getValueCodeOption($attribute[Key::CODE], $valueCode);
-                foreach ($option[Key::LABELS] as $locale => $label) {
-                    if (isset($allLabels[$locale])) {
-                        $allLabels[$locale] = new AttributeValue($allLabels[$locale] . ",$label");
+                $labels = $this->getValueCodeLabels($attribute[Key::CODE], $valueCode);
+                foreach ($labels as $locale => $label) {
+                    // todo: not yet sure how to handle multiple multiSelect values
+                    if (isset($results[$locale])) {
+                        $results[$locale] = new AttributeValue($results[$locale] . ',' . $label, $valueCode);
                     } else {
-                        $allLabels[$locale] = new AttributeValue($label);
+                        $results[$locale] = new AttributeValue($label, $valueCode);
                     }
                 }
             }
         }
 
-        return $allLabels;
+        return $results;
     }
 
-    private function getValueCodeOption(string $attributeCode, $valueCode): array
+    private function getValueCodeLabels(string $attributeCode, $valueCode): array
     {
         if (!isset($this->cache[$attributeCode][$valueCode])) {
             $option = $this->attributeOptionApi->get($attributeCode, $valueCode);
-            $this->cache[$attributeCode][$valueCode] = $option;
+            $this->cache[$attributeCode][$valueCode] = $option[Key::LABELS];
         }
 
         return $this->cache[$attributeCode][$valueCode];

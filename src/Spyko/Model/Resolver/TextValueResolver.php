@@ -9,16 +9,16 @@ class TextValueResolver implements ValueResolverInterface
 {
     public function resolve(array $attribute, array $value)
     {
-        $allValues = [];
+        $results = [];
         foreach ($value as $item) {
             if (isset($item[Key::LOCALE])) {
-                $allValues[$item[Key::LOCALE]] = new AttributeValue($item[Key::DATA]);
+                $results[$item[Key::LOCALE]] = new AttributeValue($item[Key::DATA]);
             } else {
                 return new AttributeValue($item[Key::DATA]);
             }
 
         }
 
-        return $allValues;
+        return $results;
     }
 }

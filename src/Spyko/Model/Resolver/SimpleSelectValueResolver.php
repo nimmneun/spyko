@@ -14,7 +14,7 @@ class SimpleSelectValueResolver implements ValueResolverInterface
     private $attributeOptionApi;
 
     /**
-     * @var array ['attributeCode']['valueCode']
+     * @var array [attributeCode][valueCode][locale]
      */
     private $cache = [];
 
@@ -25,28 +25,28 @@ class SimpleSelectValueResolver implements ValueResolverInterface
 
     public function resolve(array $attribute, array $value)
     {
-        $allLabels = [];
+        $results = [];
         foreach ($value as $item) {
-            $option = $this->getValueCodeOption($attribute[Key::CODE], $item[Key::DATA]);
-            $attributeValueCode = $item[Key::DATA];
+            $labels = $this->getValueCodeLabels($attribute[Key::CODE], $item[Key::DATA]);
+            $valueCode = $item[Key::DATA];
             if ($item[Key::LOCALE]) {
-                $attributeValue = $option[Key::LABELS][$item[Key::LOCALE]];
-                $allLabels[$item[Key::LOCALE]] = new AttributeValue($attributeValue, $attributeValueCode);
+                $attributeValue = $labels[$item[Key::LOCALE]];
+                $results[$item[Key::LOCALE]] = new AttributeValue($attributeValue, $valueCode);
             } else {
-                foreach ($option[Key::LABELS] as $locale => $label) {
-                    $allLabels[$locale] = new AttributeValue($label, $attributeValueCode);
+                foreach ($labels as $locale => $label) {
+                    $results[$locale] = new AttributeValue($label, $valueCode);
                 }
             }
         }
 
-        return $allLabels;
+        return $results;
     }
 
-    private function getValueCodeOption(string $attributeCode, $valueCode): array
+    private function getValueCodeLabels(string $attributeCode, $valueCode): array
     {
         if (!isset($this->cache[$attributeCode][$valueCode])) {
             $option = $this->attributeOptionApi->get($attributeCode, $valueCode);
-            $this->cache[$attributeCode][$valueCode] = $option;
+            $this->cache[$attributeCode][$valueCode] = $option[Key::LABELS];
         }
 
         return $this->cache[$attributeCode][$valueCode];
